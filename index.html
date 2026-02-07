@@ -2,108 +2,328 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gokul P R | Software Engineer</title>
+    <!-- Proper viewport for mobile safe areas -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+
+    <title>Gokul P R Terminal</title>
+
+    <!-- Plausible Analytics -->
+    <script
+      defer
+      data-domain="gokulpr-47.github.io"
+      src="https://plausible.io/js/script.js"
+    ></script>
+
+    <!-- Fira Code Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
 
     <style>
+      :root {
+        --safe-top: env(safe-area-inset-top);
+        --safe-bottom: env(safe-area-inset-bottom);
+        --safe-left: env(safe-area-inset-left);
+        --safe-right: env(safe-area-inset-right);
+      }
+
       * {
-        margin: 0;
-        padding: 0;
         box-sizing: border-box;
-        font-family: "Inter", sans-serif;
       }
 
       body {
-        background: linear-gradient(135deg, #0f172a, #020617);
-        color: #e5e7eb;
+        background: black;
+        color: #00ff9c;
+        font-family: "Fira Code", monospace;
+        margin: 0;
+        padding: 0;
+        height: 100svh; /* small viewport height */
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
-        padding: 20px;
       }
 
-      .container {
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(12px);
-        padding: 40px 50px;
-        border-radius: 16px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-        max-width: 520px;
-        text-align: center;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      h1 {
-        font-size: 2.2rem;
-        font-weight: 700;
-        margin-bottom: 8px;
-      }
-
-      p {
-        font-size: 1rem;
-        color: #9ca3af;
-        margin-bottom: 25px;
-      }
-
-      .btn {
-        display: inline-block;
-        padding: 14px 28px;
-        background: #2563eb;
-        color: white;
-        text-decoration: none;
-        font-weight: 600;
+      /* Terminal Container */
+      .terminal-wrapper {
+        position: relative;
+        width: 100%;
+        max-width: 900px;
+        height: calc(100svh - var(--safe-top) - var(--safe-bottom));
+        margin-top: var(--safe-top);
+        margin-bottom: var(--safe-bottom);
+        border: 1px solid #00ff9c;
+        box-shadow: 0 0 20px #00ff9c33;
+        display: flex;
+        flex-direction: column;
+        background: black;
         border-radius: 8px;
-        transition: all 0.2s ease;
+        overflow: hidden;
       }
 
-      .btn:hover {
-        background: #1d4ed8;
-        transform: translateY(-2px);
+      /* Clock */
+      .clock {
+        position: absolute;
+        top: calc(6px + var(--safe-top));
+        right: 12px;
+        font-size: 12px;
+        letter-spacing: 2px;
+        color: #00ff9c;
+        z-index: 10;
       }
 
-      .links {
-        margin-top: 25px;
-        font-size: 0.95rem;
+      /* Help Panel */
+      .help-panel {
+        border-bottom: 1px solid #00ff9c33;
+        padding: 10px 12px;
+        font-size: 13px;
+        background: #020617;
+        color: #38bdf8;
+        line-height: 1.4;
       }
 
-      .links a {
-        color: #60a5fa;
+      .help-panel span {
+        color: #00ff9c;
+      }
+
+      /* Terminal Output */
+      .terminal {
+        flex: 1;
+        padding: 12px;
+        overflow-y: auto;
+        font-size: 14px;
+        line-height: 1.5;
+        word-wrap: break-word;
+        overscroll-behavior: contain;
+      }
+
+      /* Input Area */
+      .prompt-line {
+        display: flex;
+        gap: 6px;
+        padding: 12px;
+        padding-bottom: calc(12px + var(--safe-bottom));
+        border-top: 1px solid #00ff9c33;
+        font-size: 14px;
+        position: sticky;
+        bottom: 0;
+        background: black;
+        z-index: 5;
+      }
+
+      .prompt {
+        color: #00ff9c;
+      }
+
+      input {
+        background: transparent;
+        border: none;
+        color: #00ff9c;
+        outline: none;
+        flex: 1;
+        font-family: inherit;
+        font-size: 14px;
+      }
+
+      a {
+        color: #38bdf8;
         text-decoration: none;
-        margin: 0 10px;
-        font-weight: 500;
       }
 
-      .links a:hover {
+      a:hover {
         text-decoration: underline;
       }
 
-      footer {
-        margin-top: 20px;
-        font-size: 0.8rem;
-        color: #6b7280;
+      /* Mobile tuning */
+      @media (max-width: 600px) {
+        .terminal-wrapper {
+          width: 100vw;
+          max-width: 100vw;
+          border-radius: 0;
+        }
+
+        .help-panel {
+          font-size: 12px;
+        }
+
+        .terminal {
+          font-size: 13px;
+        }
+
+        input {
+          font-size: 13px;
+        }
+
+        .clock {
+          font-size: 11px;
+        }
       }
     </style>
   </head>
 
   <body>
-    <div class="container">
-      <h1>Gokul P R</h1>
-      <p>Software Engineer • Full Stack Developer • Java • Node.js • React</p>
+    <div class="terminal-wrapper">
+      <!-- Clock -->
+      <div class="clock" id="clock"></div>
 
-      <a class="btn" href="resume.pdf" target="_blank"
-        >📄 View / Download Resume</a
-      >
-
-      <div class="links">
-        <a href="https://github.com/gokulpr-47" target="_blank">GitHub</a>
-        <a href="https://linkedin.com/in/gokul-p-r-744710206" target="_blank"
-          >LinkedIn</a
-        >
-        <a href="mailto:gokulpr47@gmail.com">Email</a>
+      <!-- Help Panel -->
+      <div class="help-panel">
+        Commands:
+        <span>whoami</span> | <span>links</span> | <span>resume</span> |
+        <span>github</span> | <span>linkedin</span> | <span>email</span> |
+        <span>clear</span>
+        <br />
+        Autocomplete: <span>TAB</span> • History: <span>↑ ↓</span> • Mobile: Tap
+        to type
       </div>
 
-      <footer>© 2026 Gokul P R — Hosted on GitHub Pages</footer>
+      <!-- Terminal Output -->
+      <div class="terminal" id="output">
+        Welcome to Gokul P R's interactive terminal.<br />
+        Try typing <b>whoami</b> or <b>links</b>.<br /><br />
+      </div>
+
+      <!-- Input -->
+      <div class="prompt-line">
+        <span class="prompt">$</span>
+        <input id="commandInput" autocomplete="off" />
+      </div>
     </div>
+
+    <script>
+      const output = document.getElementById("output");
+      const input = document.getElementById("commandInput");
+
+      const commandList = [
+        "whoami",
+        "links",
+        "resume",
+        "github",
+        "linkedin",
+        "email",
+        "clear",
+      ];
+
+      const commands = {
+        whoami: `
+Gokul P R — Software Engineer
+Full Stack Developer | Backend & Cloud Enthusiast
+Working at Capgemini
+`,
+        links: `
+📄 <a href="resume.pdf" target="_blank">Resume</a><br>
+🧑‍💻 <a href="https://github.com/gokulpr-47" target="_blank">GitHub</a><br>
+🔗 <a href="https://linkedin.com/in/gokul-p-r-744710206" target="_blank">LinkedIn</a><br>
+📧 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=gokulpr47@gmail.com" target="_blank">Email</a>
+`,
+      };
+
+      let history = [];
+      let historyIndex = -1;
+
+      function print(text) {
+        output.innerHTML += text + "<br>";
+        output.scrollTop = output.scrollHeight;
+      }
+
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          const cmd = input.value.trim();
+          if (!cmd) return;
+          history.push(cmd);
+          historyIndex = history.length;
+          print(`<span style="color:#00ff9c">$ ${cmd}</span>`);
+          handleCommand(cmd);
+          input.value = "";
+        }
+
+        if (e.key === "ArrowUp") {
+          if (historyIndex > 0) {
+            historyIndex--;
+            input.value = history[historyIndex];
+          }
+          e.preventDefault();
+        }
+
+        if (e.key === "ArrowDown") {
+          if (historyIndex < history.length - 1) {
+            historyIndex++;
+            input.value = history[historyIndex];
+          } else {
+            input.value = "";
+          }
+          e.preventDefault();
+        }
+
+        if (e.key === "Tab") {
+          e.preventDefault();
+          const current = input.value.toLowerCase();
+          const match = commandList.find((c) => c.startsWith(current));
+          if (match) input.value = match;
+        }
+      });
+
+      function handleCommand(cmd) {
+        cmd = cmd.toLowerCase();
+
+        if (commands[cmd]) {
+          print(commands[cmd]);
+          return;
+        }
+
+        switch (cmd) {
+          case "resume":
+            window.open("resume.pdf", "_blank");
+            break;
+          case "github":
+            window.open("https://github.com/gokulpr-47", "_blank");
+            break;
+          case "linkedin":
+            window.open(
+              "https://linkedin.com/in/gokul-p-r-744710206",
+              "_blank",
+            );
+            break;
+          case "email":
+            window.open(
+              "https://mail.google.com/mail/?view=cm&fs=1&to=gokulpr47@gmail.com",
+              "_blank",
+            );
+            break;
+          case "clear":
+            output.innerHTML = "";
+            break;
+          default:
+            print(`Command not found: ${cmd}`);
+        }
+      }
+
+      // Clock
+      function updateClock() {
+        const now = new Date();
+        document.getElementById("clock").textContent = now.toLocaleTimeString(
+          "en-US",
+          { hour12: false },
+        );
+      }
+      setInterval(updateClock, 1000);
+      updateClock();
+
+      // Mobile focus
+      document.body.addEventListener("click", () => input.focus());
+
+      // Dynamic viewport fix (keyboard, browser bars)
+      function setAppHeight() {
+        document.documentElement.style.setProperty(
+          "--app-height",
+          `${window.innerHeight}px`,
+        );
+      }
+      window.addEventListener("resize", setAppHeight);
+      setAppHeight();
+    </script>
   </body>
 </html>
