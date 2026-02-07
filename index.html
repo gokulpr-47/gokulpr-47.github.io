@@ -1,33 +1,109 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <title>Gokul P R | Resume</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gokul P R | Software Engineer</title>
+
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+
       body {
-        font-family: Arial;
-        margin: 50px;
-        background: #f7f7f7;
+        background: linear-gradient(135deg, #0f172a, #020617);
+        color: #e5e7eb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 20px;
       }
+
+      .container {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(12px);
+        padding: 40px 50px;
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        max-width: 520px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
       h1 {
-        font-size: 32px;
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 8px;
       }
+
+      p {
+        font-size: 1rem;
+        color: #9ca3af;
+        margin-bottom: 25px;
+      }
+
       .btn {
-        padding: 12px 20px;
-        background: #007bff;
+        display: inline-block;
+        padding: 14px 28px;
+        background: #2563eb;
         color: white;
         text-decoration: none;
-        border-radius: 5px;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+      }
+
+      .btn:hover {
+        background: #1d4ed8;
+        transform: translateY(-2px);
+      }
+
+      .links {
+        margin-top: 25px;
+        font-size: 0.95rem;
+      }
+
+      .links a {
+        color: #60a5fa;
+        text-decoration: none;
+        margin: 0 10px;
+        font-weight: 500;
+      }
+
+      .links a:hover {
+        text-decoration: underline;
+      }
+
+      footer {
+        margin-top: 20px;
+        font-size: 0.8rem;
+        color: #6b7280;
       }
     </style>
   </head>
+
   <body>
-    <h1>Gokul P R</h1>
-    <p>Software Engineer | Full Stack Developer</p>
+    <div class="container">
+      <h1>Gokul P R</h1>
+      <p>Software Engineer • Full Stack Developer • Java • Node.js • React</p>
 
-    <a class="btn" href="resume.pdf" target="_blank"
-      >📄 View / Download Resume</a
-    >
+      <a class="btn" href="resume.pdf" target="_blank"
+        >📄 View / Download Resume</a
+      >
 
-    <p>GitHub: <a href="https://github.com/gokulpr-47">gokulpr-47</a></p>
+      <div class="links">
+        <a href="https://github.com/gokulpr-47" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/in/gokul-p-r-744710206" target="_blank"
+          >LinkedIn</a
+        >
+        <a href="mailto:gokulpr47@gmail.com">Email</a>
+      </div>
+
+      <footer>© 2026 Gokul P R — Hosted on GitHub Pages</footer>
+    </div>
   </body>
 </html>
